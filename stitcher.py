@@ -20,7 +20,6 @@ class Stitcher:
         :param path1:
         :param path2:
         """
-        # 边界填充
         img1 = cv2.imread(path1)
         img2 = cv2.imread(path2)
 
