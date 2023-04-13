@@ -1,6 +1,8 @@
+import threading
+import time
+
 import serial
 import serial.tools.list_ports
-import threading
 
 
 class SerialReader(threading.Thread):
@@ -16,6 +18,7 @@ class SerialReader(threading.Thread):
             data = self.serial_manager.read()
             if data:
                 print("Read:", data)
+            time.sleep(0.01)
         print("Serial reader stopped.")
 
 
@@ -40,7 +43,7 @@ class SerialManager:
         return self.ser.write(data.encode())
 
     def read(self) -> str:
-        return self.ser.readline().decode("utf-8").replace("\r\n", "")
+        return self.ser.readline().decode().replace("\r", "").replace("\n", "")
 
     def close(self) -> None:
         self.serial_reader.stop.set()
