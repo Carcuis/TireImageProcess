@@ -1,10 +1,12 @@
 import cv2
 
 from camera import Camera
+from serial_manager import SerialManager
 from util import Util
 
 
 def main():
+    serial_manager = SerialManager()
     Util.init()
     cam = Camera(0)
 
@@ -40,6 +42,12 @@ def main():
         elif key_char == 'c' and not capturing:
             capturing = True
             cam.photos_num = 0
+        elif key_char == '1':
+            serial_manager.write("38")
+        elif key_char == '2':
+            serial_manager.write("39")
+        elif key_char == '0':
+            serial_manager.write("A")
 
 
 if __name__ == '__main__':
