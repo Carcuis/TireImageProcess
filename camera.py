@@ -36,7 +36,7 @@ class Camera(threading.Thread):
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1600)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 800)
         # self.cap.set(cv2.CAP_PROP_FPS, 30)
-        self.cap.set(cv2.CAP_PROP_EXPOSURE, 2)
+        self.cap.set(cv2.CAP_PROP_EXPOSURE, -6)
         self.cap.set(cv2.CAP_PROP_GAIN, 255)
         print(f"Camera inner FPS: {self.cap.get(cv2.CAP_PROP_FPS)}")
         print(f"Camera exposure: {self.cap.get(cv2.CAP_PROP_EXPOSURE)}")
@@ -110,4 +110,5 @@ class Camera(threading.Thread):
         return False
 
     def __del__(self) -> None:
+        print("Camera released.")
         self.cap.release()
