@@ -1,3 +1,4 @@
+import os
 import time
 
 import cv2
@@ -65,3 +66,35 @@ class Util:
     @staticmethod
     def get_date_str() -> str:
         return Util.get_time_str("%Y%m%d")
+
+    @staticmethod
+    def get_file_name_without_ext(file_path: str) -> str:
+        return os.path.splitext(os.path.basename(file_path))[0]
+
+    @staticmethod
+    def ensure_folder_exist(folder_name: str) -> None:
+        if not os.path.exists(folder_name):
+            print(f"Create folder: {folder_name}")
+            os.makedirs(folder_name)
+
+    @staticmethod
+    def generate_new_save_path(parent_dir: str) -> str:
+        """
+        生成一个新的保存路径: 父级目录/日期/序号(新)
+
+        :param parent_dir: 父级目录
+        :return: 新的保存路径
+        """
+
+        time_folder_str = Util.get_date_str()
+        folder_name = os.path.join(os.getcwd(), parent_dir, time_folder_str)
+        Util.ensure_folder_exist(folder_name)
+        num = 1
+        while True:
+            path = os.path.join(folder_name, str(num))
+            # 找到一个空文件夹
+            if os.path.exists(path) and len(os.listdir(path)) > 0:
+                num += 1
+                continue
+            Util.ensure_folder_exist(path)
+            return path

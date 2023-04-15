@@ -85,22 +85,8 @@ class Camera(threading.Thread):
 
         if self.photo_save_path == "":
             # 保存在img/[date]/[num]文件夹下
-            time_folder_str = Util.get_date_str()
-            folder_name = os.path.join(os.getcwd(), "img", time_folder_str)
-            if not os.path.exists(folder_name):
-                print(f"Create folder: {folder_name}")
-                os.makedirs(folder_name)
-            num = 1
-            while True:
-                new_dir = os.path.join(folder_name, str(num))
-                # 找到一个空文件夹
-                if os.path.exists(new_dir) and len(os.listdir(new_dir)) > 0:
-                    num += 1
-                    continue
-                print(f"Create folder: {new_dir}")
-                print(f"Save photos to: {new_dir}")
-                os.makedirs(new_dir)
-                break
+            new_dir = Util.generate_new_save_path("img")
+            print(f"Save photos to: {new_dir}")
             self.photo_save_path = new_dir
 
         # 保存图像
