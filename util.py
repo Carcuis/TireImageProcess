@@ -79,6 +79,14 @@ class Util:
                 os.makedirs(folder_name)
 
     @staticmethod
+    def ensure_file_exist(*files: str) -> None:
+        for file_name in files:
+            if not os.path.exists(file_name):
+                Util.ensure_folder_exist(os.path.dirname(file_name))
+                print(f"Create file: {file_name}")
+                open(file_name, 'w').close()
+
+    @staticmethod
     def generate_new_save_path(parent_dir: str) -> str:
         """
         生成一个新的保存路径: 父级目录/日期/序号(新)
