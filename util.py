@@ -1,9 +1,9 @@
+import glob
 import os
 import time
+from typing import Callable
 
 import cv2
-
-from typing import Callable
 
 
 class FPSCounter:
@@ -72,10 +72,11 @@ class Util:
         return os.path.splitext(os.path.basename(file_path))[0]
 
     @staticmethod
-    def ensure_folder_exist(folder_name: str) -> None:
-        if not os.path.exists(folder_name):
-            print(f"Create folder: {folder_name}")
-            os.makedirs(folder_name)
+    def ensure_folder_exist(*folders: str) -> None:
+        for folder_name in folders:
+            if not os.path.exists(folder_name):
+                print(f"Create folder: {folder_name}")
+                os.makedirs(folder_name)
 
     @staticmethod
     def generate_new_save_path(parent_dir: str) -> str:
@@ -98,3 +99,14 @@ class Util:
                 continue
             Util.ensure_folder_exist(path)
             return path
+
+    @staticmethod
+    def get_file_list_in_dir_by_ext(dir_path: str, ext: str) -> list[str]:
+        """
+        获取指定目录下的所有指定文件类型
+
+        :param dir_path: 图片所在目录
+        :param ext: 文件类型后缀
+        :return: 图片文件列表
+        """
+        return glob.glob(os.path.join(dir_path, f'*.{ext}'))
