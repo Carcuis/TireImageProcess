@@ -84,8 +84,8 @@ class Camera(threading.Thread):
         filename = f"{time_filename_str}.jpg"
 
         if self.photo_save_path == "":
-            # 保存在img/[date]/[num]文件夹下
-            new_dir = Util.generate_new_save_path("img")
+            # 保存在img/tire/[date]/[num]文件夹下
+            new_dir = Util.generate_new_save_path(os.path.join("img", "tire"))
             print(f"Save photos to: {new_dir}")
             self.photo_save_path = new_dir
 

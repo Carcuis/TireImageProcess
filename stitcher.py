@@ -15,7 +15,7 @@ class Stitcher:
         self.bottom_padding = bottom
         self.left_padding = left
         self.right_padding = right
-        self.save_path = Util.generate_new_save_path("stitch")
+        self.save_path = Util.generate_new_save_path(os.path.join("img", "stitch"))
 
     def _stitch_manually(self, path1: str, path2: str, show_match=True) -> tuple[bool, NDArray]:
         """
@@ -232,7 +232,7 @@ class Stitcher:
 def main():
     stitcher = Stitcher()
 
-    img_folder = "straighten/20230415/2"
+    img_folder = "img/straighten/20230415/2"
 
     start = time.time()
     stitcher.stitch_two(img_folder, step=1, preview=True, save=True, use_cv2_algorithm=False)

@@ -9,7 +9,7 @@ from util import Util
 
 class Straightener:
     def __init__(self) -> None:
-        self.save_path = Util.generate_new_save_path("straighten")
+        self.save_path = Util.generate_new_save_path(os.path.join("img", "straighten"))
 
     def straighten(self, img_path: str, preview: bool = True, save: bool = True) -> None:
         """
@@ -74,7 +74,7 @@ class Straightener:
 def main():
     straightener = Straightener()
     start = time.time()
-    straightener.straighten_from_folder("img/20230412/5", preview=True, save=True)
+    straightener.straighten_from_folder("img/tire/20230412/5", preview=True, save=True)
     end = time.time()
     print("Total time spent: ", end - start)
 
