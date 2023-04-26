@@ -1,14 +1,14 @@
 import os
 import xml.etree.ElementTree as ET
 
+from global_config import Global
 from util import Util
 
 
 class Converter:
     def __init__(self) -> None:
-        self.current_dir = os.getcwd()
-
-        self.classes_txt = os.path.join(self.current_dir, "dataset", "classes.txt")
+        self.dataset_dir = Global.dataset_dir
+        self.classes_txt = os.path.join(self.dataset_dir, "classes.txt")
         if not os.path.exists(self.classes_txt):
             print(f"Error: {self.classes_txt} does not exist.")
             print("Please run get_classes.py first to generate a classes.txt.")
@@ -17,8 +17,8 @@ class Converter:
             self.classes = tuple([line.strip() for line in f.readlines()])
         print(f"classes: {self.classes}")
 
-        self.annotation_dir = os.path.join(self.current_dir, "dataset", "annotations")
-        self.output_dir = os.path.join(self.current_dir, "dataset", "labels")
+        self.annotation_dir = os.path.join(self.dataset_dir, "annotations")
+        self.output_dir = os.path.join(self.dataset_dir, "labels")
         Util.ensure_folder_exist(self.output_dir)
         print(f"Save converted labels to {self.output_dir}")
         self.xml_list = Util.get_file_list_in_dir_by_ext(self.annotation_dir, "xml")

@@ -2,16 +2,13 @@ import os
 import random
 import shutil
 
+from global_config import Global
 from util import Util
 
 
 class SplitTrainVal:
     def __init__(self) -> None:
-        self.current_dir = os.getcwd()
-        self.dataset_dir = os.path.join(self.current_dir, "dataset")
-        if not os.path.exists(self.dataset_dir):
-            print("Error: 当前目录下不存在 dataset 文件夹")
-            exit(1)
+        self.dataset_dir = Global.dataset_dir
         self.images_folder = os.path.join(self.dataset_dir, "images")
         self.labels_folder = os.path.join(self.dataset_dir, "labels")
         if not os.path.exists(self.images_folder) or not os.path.exists(self.labels_folder):

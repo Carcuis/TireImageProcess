@@ -1,18 +1,19 @@
 import os
 import xml.etree.ElementTree as ET
 
+from global_config import Global
 from util import Util
 
 
 class VOCAnnotationCounter:
     def __init__(self) -> None:
-        self.current_dir = os.getcwd()
-        self.annotation_dir = os.path.join(self.current_dir, "dataset", "annotations")
+        self.dataset_dir = Global.dataset_dir
+        self.annotation_dir = os.path.join(self.dataset_dir, "annotations")
         if not os.path.exists(self.annotation_dir):
             raise FileNotFoundError(f"{self.annotation_dir} does not exist.")
         self.class_list = []
         self.class_instances = {}  # {class_name: instance_count}
-        self.classes_txt = os.path.join(self.current_dir, "dataset", "classes.txt")
+        self.classes_txt = os.path.join(self.dataset_dir, "classes.txt")
 
         self.count_classes()
         self.print_instances()

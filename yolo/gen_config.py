@@ -3,11 +3,12 @@ import time
 
 import yaml
 
+from global_config import Global
+
 
 class YamlGenerator:
     def __init__(self) -> None:
-        self.current_dir = os.getcwd()
-        self.dataset_dir = os.path.join(self.current_dir, "dataset")
+        self.dataset_dir = Global.dataset_dir
         if not os.path.exists(self.dataset_dir):
             print(f"Error: {self.dataset_dir} not found, please check current directory.")
             exit(1)

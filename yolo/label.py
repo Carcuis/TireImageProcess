@@ -1,23 +1,24 @@
 import os
 
+from global_config import Global
 from util import Util
 
 
 class LabelImgRunner:
     def __init__(self) -> None:
-        self.current_dir = os.getcwd()
-        self.dataset_dir = os.path.join(self.current_dir, "dataset", "images")
-        if not os.path.exists(self.dataset_dir):
-            print(f"Error: {self.dataset_dir} does not exist.")
+        self.dataset_dir = Global.dataset_dir
+        self.image_dir = os.path.join(self.dataset_dir, "images")
+        if not os.path.exists(self.image_dir):
+            print(f"Error: {self.image_dir} does not exist.")
             exit(1)
-        self.annotations_dir = os.path.join(self.current_dir, "dataset", "annotations")
+        self.annotations_dir = os.path.join(self.dataset_dir, "annotations")
         Util.ensure_folder_exist(self.annotations_dir)
-        self.classes_txt = os.path.join(self.current_dir, "dataset", "classes.txt")
+        self.classes_txt = os.path.join(self.dataset_dir, "classes.txt")
         Util.ensure_file_exist(self.classes_txt)
         self.check_labelimg_installation()
 
     def run(self) -> None:
-        command = f"labelImg {self.dataset_dir} {self.classes_txt} {self.annotations_dir}"
+        command = f"labelImg {self.image_dir} {self.classes_txt} {self.annotations_dir}"
         print(f"Running command: {command}")
         os.system(command)
         print("Done.")
