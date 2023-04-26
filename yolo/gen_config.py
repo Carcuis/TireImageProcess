@@ -11,11 +11,11 @@ class YamlGenerator:
         if not os.path.exists(self.dataset_dir):
             print(f"Error: {self.dataset_dir} not found, please check current directory.")
             exit(1)
-        self.train = "train/images"
-        self.val = "val/images"
-        self.test = "test/images"
+        self.train = os.path.join("train", "images")
+        self.val = os.path.join("val", "images")
+        self.test = os.path.join("test", "images")
         self.classes_txt = os.path.join(self.dataset_dir, "classes.txt")
-        self.config_yaml = os.path.join(self.current_dir, "yolo", "config.yaml")
+        self.config_yaml = os.path.join(os.getcwd(), "yolo", "config.yaml")
 
     def get_classes(self) -> dict[int, str]:
         if not os.path.exists(self.classes_txt):
