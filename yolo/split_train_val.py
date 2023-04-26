@@ -61,7 +61,7 @@ class SplitTrainVal:
         images_list = sorted(os.listdir(self.images_folder))
         labels_list = sorted(os.listdir(self.labels_folder))
         num_data = len(images_list)
-        num_train = int(num_data * 0.6)  # 训练集占60%
+        num_train = int(num_data * 0.8)  # 训练集占60%
         num_val = int(num_data * 0.2)  # 验证集占20%
         # num_test = num_data - num_train - num_val  # 测试集占20%
         indices = list(range(num_data))
@@ -90,15 +90,15 @@ class SplitTrainVal:
             shutil.copy2(label_path, val_labels_folder)
 
         # 拷贝测试集数据到test文件夹中
-        print(f"Copying {num_val} images and labels to {self.test_folder}")
-        test_images_folder = os.path.join(self.test_folder, "images")
-        test_labels_folder = os.path.join(self.test_folder, "labels")
-        Util.ensure_folder_exist(test_images_folder, test_labels_folder)
-        for i in indices[num_train + num_val:]:
-            image_path = os.path.join(self.images_folder, images_list[i])
-            label_path = os.path.join(self.labels_folder, labels_list[i])
-            shutil.copy2(image_path, test_images_folder)
-            shutil.copy2(label_path, test_labels_folder)
+        # print(f"Copying {num_val} images and labels to {self.test_folder}")
+        # test_images_folder = os.path.join(self.test_folder, "images")
+        # test_labels_folder = os.path.join(self.test_folder, "labels")
+        # Util.ensure_folder_exist(test_images_folder, test_labels_folder)
+        # for i in indices[num_train + num_val:]:
+        #     image_path = os.path.join(self.images_folder, images_list[i])
+        #     label_path = os.path.join(self.labels_folder, labels_list[i])
+        #     shutil.copy2(image_path, test_images_folder)
+        #     shutil.copy2(label_path, test_labels_folder)
 
         print("Split done.")
 
