@@ -34,42 +34,49 @@ class SerialManager:
         self.found_device = self.detect_port()
         if self.found_device:
             self.baudrate = baudrate
-            self.ser = serial.Serial(self.port, self.baudrate)
-            self.serial_reader = SerialReader(self.ser)
-            self.serial_reader.start()
+            try:
+                self.ser = serial.Serial(self.port, self.baudrate)
+            except serial.SerialException as e:
+                print(f"WARNING: Serial port open failed: {e}")
+                self.found_device = False
+            else:
+                print("Serial open success. Starting serial reader...")
+                self.serial_reader = SerialReader(self.ser)
+                self.serial_reader.start()
 
     def detect_port(self) -> bool:
         ports = list(serial.tools.list_ports.comports())
         for p in ports:
             if "Arduino Mega 2560" in p.description:
-                print(f"Arduino Mega 2560 found on port: {p.device}")
+                print(f"Arduino Mega 2560 found on port: {p.device}.")
                 self.port = p.device
                 return True
-        print("WARNING: Arduino Mega 2560 device not found")
+        print("WARNING: Arduino Mega 2560 device not found.")
         return False
 
     def write(self, data: str) -> int:
         if not self.found_device:
-            print("Write failed: device not found")
+            print("Serial write failed: device not found or not opened.")
             return -1
         print("Write:", data)
         return self.ser.write(data.encode())
 
     def get_last_read_data(self) -> str:
         if not self.found_device:
-            print("Read failed: device not found")
+            print("Serial read failed: device not found or not opened.")
             return ""
         with self.serial_reader.data_lock:
             return self.serial_reader.data
 
-    def close(self) -> None:
+    def close(self) -> bool:
         if not self.found_device:
-            print("Close failed: device not found")
-            return
+            print("Serial close failed: device not found or not opened.")
+            return False
         self.serial_reader.stop()
         self.ser.close()
+        return True
 
     def __del__(self) -> None:
         if self.found_device:
-            self.close()
-            print("Serial closed.")
+            if self.close():
+                print("Serial closed.")
