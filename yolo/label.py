@@ -1,5 +1,6 @@
 import os
 
+from get_classes import VOCAnnotationCounter
 from global_config import Global
 from util import Util
 
@@ -46,7 +47,8 @@ class LabelImgRunner:
 def main():
     runner = LabelImgRunner()
     runner.run()
-    runner.sort_classes_txt()
+    counter = VOCAnnotationCounter()
+    counter.save_classes()
 
 
 if __name__ == "__main__":
